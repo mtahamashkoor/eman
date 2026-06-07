@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For Rida ✨</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght=700&family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #090d16; }
+        .cursive { font-family: 'Dancing Script', cursive; }
+        .neon-glow { text-shadow: 0 0 15px rgba(244, 63, 94, 0.6); }
+        .neon-border { box-shadow: 0 0 20px rgba(244, 63, 94, 0.1); }
+    </style>
+</head>
+<body class="text-slate-200 min-h-screen flex flex-col justify-between p-4 selection:bg-rose-500 selection:text-white">
+
+    <div class="absolute inset-0 overflow-hidden pointer-events-none z-0">
+        <div class="absolute top-[-10%] right-[-10%] w-[40vw] h-[40vw] rounded-full bg-indigo-900/10 blur-[100px]"></div>
+        <div class="absolute bottom-[-10%] left-[-10%] w-[40vw] h-[40vw] rounded-full bg-rose-900/10 blur-[100px]"></div>
+    </div>
+
+    <header class="relative z-10 w-full max-w-2xl mx-auto flex justify-between items-center bg-slate-900/40 backdrop-blur border border-slate-800/80 rounded-2xl px-5 py-3 mt-2">
+        <div class="flex items-center gap-2">
+            <span class="w-2.5 h-2.5 rounded-full bg-rose-500 animate-pulse"></span>
+            <span class="text-xs font-semibold tracking-wider text-rose-400 uppercase">Rida's Vibe Check</span>
+        </div>
+        <div class="text-xs text-slate-400 font-medium">
+            Developed by her friend: <span class="text-indigo-400 font-bold tracking-wide">M TAHA</span>
+        </div>
+    </header>
+
+    <main class="relative z-10 flex-grow flex flex-col items-center justify-center w-full max-w-xl mx-auto my-6">
+        
+        <div class="w-full bg-slate-900/70 backdrop-blur-xl border border-slate-800 rounded-3xl p-6 md:p-8 neon-border text-center">
+            
+            <div class="mb-6 flex justify-between items-center border-b border-slate-800 pb-4">
+                <span id="puzzle-step-text" class="text-xs font-bold tracking-widest text-rose-400 uppercase">Stage: 1 of 3</span>
+                <span class="text-xs text-slate-500">Unlocking Compliments...</span>
+            </div>
+
+            <div id="puzzle-body" class="min-h-[220px] flex flex-col items-center justify-center transition-all duration-300">
+                </div>
+
+            <div id="feedback-log" class="h-6 text-sm mt-4 font-medium transition-all text-slate-400"></div>
+
+            <div class="mt-6 pt-4 border-t border-slate-800/60 flex justify-end">
+                <button id="action-btn" onclick="checkAnswer()" class="px-6 py-2.5 bg-gradient-to-r from-rose-500 to-indigo-500 hover:from-rose-600 hover:to-indigo-600 rounded-xl text-white text-sm font-semibold tracking-wide shadow-lg transition-all active:scale-95">
+                    Unlock Compliment 🔓
+                </button>
+            </div>
+
+        </div>
+
+    </main>
+
+    <footer class="relative z-10 text-center py-4 text-[11px] text-slate-500 tracking-wide font-light">
+        Custom Interface built with 🤍 for Rida by <span class="text-slate-300 font-semibold">M TAHA</span>
+    </footer>
+
+    <script>
+        let currentStage = 0;
+
+        const stages = [
+            {
+                type: "scramble",
+                hint: "Unscramble this word to unlock a sweet truth about yourself:",
+                clue: "E T U C",
+                answer: "CUTE",
+                compliment: "Exactly! You are incredibly cute, and your vibe is completely unmatched. You just bring so much effortless joy wherever you go! 🌸"
+            },
+            {
+                type: "scramble",
+                hint: "Unscramble this city name where the coolest girl lives:",
+                clue: "K A R A C H I",
+                answer: "KARACHI",
+                compliment: "Perfect! Karachi's lights have absolutely nothing on your smile. It's easily bright enough to light up an entire city grid! ✨"
+            },
+            {
+                type: "developer-bonus",
+                hint: "Type the name of the awesome developer friend who coded this entire game just to see you smile today:",
+                clue: "M  _ _ _ _",
+                answer: "M TAHA",
+                compliment: "Bingo! M TAHA built this line-by-line just for you. You deserve the absolute best, Rida! 🏆"
+            }
+        ];
+
+        function focusInput() {
+            const input = document.getElementById('user-input');
+            if (input) input.focus();
+        }
+
+        function renderStage() {
+            const container = document.getElementById('puzzle-body');
+            const stepText = document.getElementById('puzzle-step-text');
+            const actionBtn = document.getElementById('action-btn');
+            const stage = stages[currentStage];
+
+            document.getElementById('feedback-log').innerText = "";
+            stepText.innerText = `Stage: ${currentStage + 1} of ${stages.length}`;
+            actionBtn.innerText = "Unlock Compliment 🔓";
+
+            if (currentStage >= stages.length) {
+                showVictoryScreen();
+                return;
+            }
+
+            container.innerHTML = `
+                <p class="text-sm text-slate-400 max-w-md leading-relaxed mb-4">${stage.hint}</p>
+                <div class="bg-slate-950/60 tracking-widest border border-slate-800 text-3xl font-extrabold px-6 py-4 rounded-2xl text-transparent bg-clip-text bg-gradient-to-r from-rose-400 to-indigo-400 mb-6 font-mono">
+                    ${stage.clue}
+                </div>
+                <input type="text" id="user-input" autocomplete="off" placeholder="Type it here..." class="w-full max-w-xs bg-slate-950 border border-slate-800 focus:border-rose-500 rounded-xl px-4 py-3 text-center text-white placeholder-slate-600 focus:outline-none focus:ring-1 focus:ring-rose-500 uppercase tracking-wider font-semibold transition-all">
+            `;
+
+            document.getElementById('user-input').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') checkAnswer();
+            });
+            
+            setTimeout(focusInput, 50);
+        }
+
+        function checkAnswer() {
+            const input = document.getElementById('user-input');
+            const log = document.getElementById('feedback-log');
+            const actionBtn = document.getElementById('action-btn');
+
+            if (!input) return;
+
+            const userGuess = input.value.trim().toUpperCase();
+            const stage = stages[currentStage];
+
+            if (userGuess === stage.answer) {
+                log.className = "h-6 text-sm mt-4 font-semibold text-emerald-400 transition-all";
+                document.getElementById('puzzle-body').innerHTML = `
+                    <div class="p-2 text-center">
+                        <span class="text-4xl mb-2 block">💖</span>
+                        <p class="cursive text-3xl text-rose-400 mb-3">For Rida:</p>
+                        <p class="text-base text-slate-200 font-light leading-relaxed max-w-md mx-auto bg-slate-950/50 p-4 rounded-xl border border-slate-800/50">${stage.compliment}</p>
+                    </div>
+                `;
+                actionBtn.innerText = "Next Compliment ➡️";
+                actionBtn.setAttribute("onclick", "nextStage()");
+            } else {
+                log.className = "h-6 text-sm mt-4 font-semibold text-rose-400";
+                log.innerText = "Give it another shot! You got this, Rida.";
+                input.classList.add('border-rose-500/50');
+                setTimeout(() => input.classList.remove('border-rose-500/50'), 1000);
+            }
+        }
+
+        function nextStage() {
+            currentStage++;
+            if (currentStage < stages.length) {
+                document.getElementById('action-btn').setAttribute("onclick", "checkAnswer()");
+                renderStage();
+            } else {
+                showVictoryScreen();
+            }
+        }
+
+        function showVictoryScreen() {
+            document.getElementById('puzzle-step-text').innerText = "Game Complete! ✨";
+            document.getElementById('action-btn').classList.add('hidden');
+            document.getElementById('feedback-log').innerText = "";
+            
+            document.getElementById('puzzle-body').innerHTML = `
+                <div class="text-center py-4 space-y-4">
+                    <span class="text-5xl block">👑</span>
+                    <h2 class="text-2xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-rose-400 to-indigo-400">You Did It, Rida!</h2>
+                    <p class="text-slate-300 text-sm max-w-sm mx-auto font-light leading-relaxed">
+                        You unlocked all the hidden messages! Hopefully, this made your day a little brighter and brought a massive smile to your face.
+                    </p>
+                    <div class="bg-indigo-950/30 border border-indigo-500/20 rounded-2xl p-4 mt-2">
+                        <p class="text-xs text-indigo-300 font-mono tracking-wider">PROJECT CREDITS</p>
+                        <p class="text-sm text-slate-200 mt-1">Coded to perfection by your friend: <b class="text-white font-bold tracking-wider">M TAHA</b></p>
+                    </div>
+                </div>
+            `;
+        }
+
+        window.onload = renderStage;
+    </script>
+</body>
+</html>
